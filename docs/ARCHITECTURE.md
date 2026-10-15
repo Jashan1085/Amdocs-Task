@@ -1,5 +1,7 @@
 # Architecture and operational handoff
 
+[Documentation index](README.md) · [System design diagrams](design/README.md) · [Role workflows](WORKFLOWS.md)
+
 One Java 8 Spring Boot application serves Thymeleaf/Bootstrap pages and uses explicit
 JdbcTemplate SQL against PostgreSQL. No JPA/Hibernate, external broker, remote email
 service or production deployment is assumed.

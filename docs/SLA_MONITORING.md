@@ -60,11 +60,12 @@ only explicit prior operational states from existing escalation status-history r
 - V006 adds escalation_recipient, ticket_escalation_state and append-only
   escalation_history, plus escalation notification recipients and explicit SYSTEM
   audit actors. USER audit actors still require an existing user ID.
-- Configured contacts initially use example.test addresses. No new login roles,
-  email sending, inbox or dispatch were added. Notification delivery is milestone 8.
+- Configured contacts use example.test addresses; no external email is sent and no
+  additional login roles are required. In-app inbox/delivery processing is implemented;
+  see [NOTIFICATIONS_EVENTS.md](NOTIFICATIONS_EVENTS.md).
   Customer, current engineer (if assigned) and configured level recipient each receive
   a durable PENDING notification. Disabled/missing contacts fail the transaction and
-  retry on a later scan. Configure real contacts before implementing delivery.
+  retry on a later scan. Configure real contacts before adding an external delivery integration.
 - EscalationService locks the ticket before assessing current state. Ticket status,
   version, saved operational state, escalation records, notifications and audit are
   committed together. Database UNIQUE(ticket_id,escalation_level) and per-recipient
@@ -104,4 +105,4 @@ stale versions, rollback, overlapping checks, restart-style catch-up, duplicate
 prevention, missing recipients, SQL counters, queue ordering and executor shutdown.
 The separate schema test only reads the configured development database.
 
-Next scope: milestone 8 inbox/delivery/retries and network event simulation/recovery.
+Related features: [notifications/events](NOTIFICATIONS_EVENTS.md), [reports](REPORTS.md) and [role workflows](WORKFLOWS.md).

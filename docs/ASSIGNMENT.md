@@ -23,7 +23,8 @@ ENG1008 (Core Network). West BROADBAND incidents match ENG1021 (Broadband).
   no mutable counter or workload capacity is introduced.
 - OPEN becomes ASSIGNED; ASSIGNED, IN_PROGRESS and PENDING_CUSTOMER retain their
   status during reassignment. Resolved/closed/cancelled tickets cannot be assigned.
-  ESCALATED is deferred until milestone 7 defines operational-state resumption.
+  ESCALATED requires explicit desk resumption to its recorded operational state
+  before assignment/reassignment; see [SLA monitoring](SLA_MONITORING.md).
 - Assignment does not acknowledge a ticket, reset deadlines, change SLA policy or
   clear response/resolution timestamps. Acknowledgment belongs to milestone 6.
 - Recommendations are advisory snapshots. Save rechecks current role/account,
@@ -53,10 +54,10 @@ V004 extends DatabaseMigrate's known checksum chain. Apply with
 `scripts/Update-Database.ps1` without reprovisioning accounts. V001-V003 remain
 immutable. No automatic migrations run at normal startup.
 
-Notification now targets exactly one customer or engineer; existing customer rows
-are preserved. Successful assignment/reassignment records two PENDING notifications:
-one for the customer and one for the new engineer. Delivery/inbox processing remains
-milestone 8. Audit adds previous/new engineer foreign keys and a reason. Existing
+Successful assignment/reassignment records two PENDING notifications: one for the
+customer and one for the new engineer. Each row has one recipient; escalation-level
+recipients are a separate supported recipient type. In-app delivery and inbox processing
+are described in [NOTIFICATIONS_EVENTS.md](NOTIFICATIONS_EVENTS.md). Audit adds previous/new engineer foreign keys and a reason. Existing
 creation audit rows remain unchanged and the append-only guard stays enabled.
 
 AssignmentService uses one JDBC transaction. It locks the current desk actor, then
@@ -86,4 +87,8 @@ and notification recipient integrity. Tests never reset the development database
 Milestone 6 manual lifecycle is implemented in LIFECYCLE.md. It preserves assignment
 locks, optimistic versions, current ownership checks and atomic related writes.
 TicketTransitions supplies the central manual graph; assignment uses OPEN-to-ASSIGNED.
-Next is milestone 7 SLA monitoring/escalation.
+SLA monitoring and explicit escalation resumption are documented in [SLA_MONITORING.md](SLA_MONITORING.md).
+
+## Related documentation
+
+[Role workflows](WORKFLOWS.md) · [Assignment sequence](design/SEQUENCES.md#engineer-assignment) · [Documentation index](README.md)

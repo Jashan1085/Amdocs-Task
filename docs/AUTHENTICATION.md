@@ -14,7 +14,7 @@ On the seeded development database, create the four demo accounts once:
 .\scripts\Update-Database.ps1 -DevAccounts
 ```
 
-The latter enables the dev profile only for that command, applies V002 if needed,
+The latter enables the dev profile only for that command, applies pending migrations through V008,
 then provisions customer.demo, desk.demo, engineer.demo and manager.demo. Their
 random initial passwords are written to **config/dev-accounts.properties**, ignored
 by Git and outside the application JAR. Passwords are never printed by the command.
@@ -64,13 +64,13 @@ The reset-request response remains generic when delivery is unavailable.
 | GET /customer/dashboard | Customer services/tickets entry point |
 | GET /service-desk/dashboard | Desk intake/assignment entry point |
 | GET /engineer/dashboard | Assigned work/lifecycle entry point |
-| GET /manager/dashboard | NETWORK_MANAGER shell |
+| GET /manager/dashboard | Global operations, SLA and report entry point |
 | POST /logout | CSRF-protected logout, clears session |
 
 Customer and desk workspaces link to the service/ticket intake and tracking pages;
 see TICKET_WORKFLOW.md. Desk assignment/reassignment is described in ASSIGNMENT.md.
 Engineer work and the manual lifecycle are described in LIFECYCLE.md. The manager
-workspace remains a shell; metrics and reports are future milestones. Bootstrap CSS
+workspace includes operational metrics, SLA monitoring and reports; see [REPORTS.md](REPORTS.md). Bootstrap CSS
 is served locally from the pinned WebJar; no external CDN or browser JavaScript is
 required. Shared layout, form labels, keyboard focus, mobile layout, and generic
 403/404/500/503 pages are included.
@@ -120,7 +120,7 @@ The inbox is explicitly a development feature, not an external delivery service.
 V002 adds app_user, app_role, user_role, login_history and otp_challenge, plus nullable
 unique user_id foreign keys on customer/network_engineer. It preserves V001, ticket
 rows and immutable ticket status history. The explicit DatabaseMigrate runner checks
-V001-V005 checksums and rejects unknown versions; pending DDL and ledger records
+V001-V008 checksums and rejects unknown versions; pending DDL and ledger records
 commit together. Normal startup still performs no migrations or account provisioning.
 
 Core entrypoints: AuthenticationService for transactional flows; JdbcAuthenticationDAO

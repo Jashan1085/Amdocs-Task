@@ -3,6 +3,9 @@
 Read MILESTONES.md first, then BUILD_PLAN.md and README.md. Follow the active user's
 milestone scope. All ten approved milestones are complete. Read docs/DEMO.md,
 docs/REPORTS.md, docs/ASSESSMENT.md and docs/ARCHITECTURE.md for final handoff.
+The GitHub-facing README is indexed; docs/README.md is the documentation hub,
+docs/WORKFLOWS.md covers role journeys, and docs/design/ contains the system/class/
+ER/state/sequence diagrams. Keep those views aligned with source when changing behavior.
 
 - Java 8, Spring Boot 2.7.18, explicit SQL through JdbcTemplate. No JPA/Hibernate.
 - Use scripts/mvn.ps1 on Windows for Java 8 without changing global JAVA_HOME.

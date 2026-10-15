@@ -662,6 +662,28 @@ No live browser business mutation was needed; full flows used MockMvc/scratch Po
 plus an independent packaged HTTP smoke test. Git commit remains deferred for the
 previously recorded missing author identity; no author, commit or push was invented.
 
+## GitHub documentation refresh
+
+Completed: **16 October 2026**, after all ten implementation milestones.
+
+- Rebuilt the project README as an indexed GitHub landing page: purpose, features,
+  four roles, verified stack, architecture overview, SLA/report behavior, quick start,
+  IntelliJ/JAR execution, testing, source tree, documentation map and current scope.
+- Added docs/README.md as the hierarchical documentation hub and docs/WORKFLOWS.md
+  for each role's journey, access matrix, background behavior and entry routes.
+- Added docs/design/README.md, CLASS_DIAGRAMS.md, DATABASE.md and SEQUENCES.md:
+  system context/layers/deployment, real Java domain/service/interface classes, split
+  ER diagrams, ticket state machine, login, transactional creation/assignment, event
+  recovery and asynchronous report processing.
+- Updated older feature guides to remove stale statements that dashboards, SLA,
+  notifications or reports were still future work; migration policy now reflects
+  V001-V008 and future V009. Existing feature detail and historical test records remain.
+- Checked local Markdown targets/section anchors with case-sensitive repository paths,
+  code-fence/diagram declaration structure, and diagram class names against Java files.
+  Mermaid diagrams were checked structurally, not browser-rendered. Application tests
+  were not rerun for documentation-only changes. No application, schema or credentials
+  were changed. Prior implementation verification remains the record above.
+
 ## Required completion record
 
 For each milestone record: completion date, behavior implemented, relevant entrypoints,

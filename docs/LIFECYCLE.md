@@ -33,7 +33,8 @@ ENG1008 profile is linked to engineer.demo for this demonstration.
 | Owning customer | Feedback | CLOSED only, one submission; status remains CLOSED |
 
 No reopening or cancellation of resolved/closed tickets is supported. Escalated
-operational resumption remains milestone 7. Requesting/resuming customer information
+work requires desk resumption to the recorded prior operational state; see
+[SLA monitoring](SLA_MONITORING.md). Requesting/resuming customer information
 is performed by the assigned engineer in this version; it does not pause SLA time.
 
 All actions use current database role/profile/assignment/ownership, not submitted
@@ -65,8 +66,8 @@ roll back every write. Feedback increments row_version but adds no status histor
 the ticket primary key and row lock prevent duplicate submissions. Stale edits return
 HTTP 409, foreign ticket access 404, and wrong role access 403.
 
-Notifications remain durable PENDING records. No email/SMS or background dispatch
-is introduced. V005 adds FEEDBACK_RECEIVED to the controlled notification events.
+Lifecycle changes create durable PENDING notifications for background in-app
+processing; see [NOTIFICATIONS_EVENTS.md](NOTIFICATIONS_EVENTS.md). No email/SMS is sent. V005 adds FEEDBACK_RECEIVED to the controlled notification events.
 Description, reasons, resolution text and comments are escaped by Thymeleaf. All
 mutation forms require CSRF. Resolution/cancellation/feedback reject UPDATE/DELETE.
 
@@ -92,3 +93,7 @@ already provisioned). No startup migrations. Read-only live verification is:
 `scripts/mvn.ps1 -Dtelecom.integration=true -Dtest=DatabaseSchemaIntegrationTest test`.
 
 Next milestone is SLA monitoring/escalation, not notification delivery or reports.
+
+## Related documentation
+
+[Role workflows](WORKFLOWS.md) · [State and sequence diagrams](design/SEQUENCES.md) · [Documentation index](README.md)

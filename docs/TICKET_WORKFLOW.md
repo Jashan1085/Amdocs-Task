@@ -40,7 +40,7 @@ Numbers intentionally use a distinct format from the historic TT-2026-000001 see
 fixtures. Sequence gaps are expected after rollbacks; never use MAX + 1. Notification
 recipients are customer IDs, so desk intake works even without a customer login.
 Read state is separate from delivery processing state. Inbox display, background
-delivery and retries are milestone 8; a PENDING record does not mean email was sent.
+delivery and retries use the in-app processor described in [NOTIFICATIONS_EVENTS.md](NOTIFICATIONS_EVENTS.md); a PENDING record does not mean delivery succeeded.
 
 SLAService selects the highest immutable policy version for the chosen priority and
 uses the injectable Clock once for creation and both deadlines. Durations are
@@ -64,8 +64,7 @@ submissions create separate tickets; idempotency keys are not part of this miles
 - V003: ticket_number_seq, notification, audit_event, indexes and audit mutation guard.
 
 Run `scripts/Test-AuthIntegration.ps1` for isolated PostgreSQL security, UI, workflow
-and DAO tests. It loads V001 fixtures and V002/V003 only in its disposable auth DB;
-the existing DAO DB remains a baseline-only mapping test. The auth DB also loads V004
-for assignment tests. Tests include all four roles,
+and DAO tests. It installs V001 fixtures and upgrades through V008 in its disposable
+auth DB; the separate DAO DB remains a baseline-only mapping test. Tests include all four roles,
 cross-customer denial, escaped user content, filters/paging, concurrent numbers,
 policy selection and rollback on history, notification or audit failure.

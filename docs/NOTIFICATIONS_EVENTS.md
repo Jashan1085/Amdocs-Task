@@ -119,5 +119,5 @@ failure isolation, startup recovery, fan-out/replay, unmapped review, transactio
 ticket failures, role/CSRF validation and executor lifecycle. The separate configured
 database suite is read-only. See MILESTONES.md for actual results and migration state.
 
-Next scope is milestone 9: four completed dashboards and seven asynchronous CSV/TXT
-reports with authorized job status/downloads. No reports were implemented here.
+Operational dashboards and seven asynchronous reports are implemented and documented
+in [REPORTS.md](REPORTS.md). See the [documentation index](README.md) for all feature guides.

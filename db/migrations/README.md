@@ -15,16 +15,23 @@ V004 adds category-to-specialization rules, engineer notification recipients and
 assignment audit details without rewriting existing tickets.
 V005 adds resolution/cancellation/feedback storage and the feedback notification
 event. Legacy resolved tickets are preserved without fabricated resolution records.
-Apply pending versions explicitly with scripts/Update-Database.ps1. DatabaseMigrate verifies
-V001-V005 checksums, applies missing versions and ledger entries atomically, and is a no-op when
+V006 adds escalation state/history/recipients and explicit SYSTEM audit actors.
+V007 adds local delivery receipts/retries and network nodes, mappings, events and
+unique event/service ticket associations. V008 expands the resolution-code catalog
+while retaining all previous values.
+
+Apply pending versions explicitly with `scripts/Update-Database.ps1`. DatabaseMigrate verifies
+V001-V008 checksums, applies missing versions and ledger entries atomically, and is a no-op when
 already current. It refuses missing/altered baselines or unknown newer versions.
 Optional -DevAccounts provisions demo logins separately after migration; it does not
-overwrite existing credentials/accounts. See docs/AUTHENTICATION.md.
+overwrite existing credentials/accounts. See [authentication](../../docs/AUTHENTICATION.md).
 
-Future migrations use increasing names from V006 onward. Extend the runner's known
+Future migrations use increasing names from V009 onward. Extend the runner's known
 versions; each migration must be additive and record its checksum in the same
 transaction. There is no automatic migration on application startup.
 
 The psql compatibility entrypoint does not create the ledger. If an existing database
 was installed manually, inspect its tables/constraints and record a verified baseline
 through a separate reviewed adoption migration. Do not reapply V001 to it.
+
+For the complete version inventory and ER diagrams, see [database design](../../docs/design/DATABASE.md).
