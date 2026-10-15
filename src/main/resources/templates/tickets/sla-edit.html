@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('SLA operations')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><p class="eyebrow" th:text="${ticket.ticketNumber}"></p><h1 th:text="${resuming ? 'Resume escalated ticket' : 'Change priority'}"></h1>
+<a th:href="@{/service-desk/tickets/{id}(id=${ticket.ticketId})}">Back to ticket</a>
+<form class="card p-4 mt-4" th:object="${form}" th:action="@{${'/service-desk/tickets/'+ticket.ticketId+(resuming ? '/resume-escalation' : '/priority')}}" method="post">
+<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></div>
+<input type="hidden" th:field="*{rowVersion}"><div th:unless="${resuming}" class="mb-3"><label for="priority" class="form-label">New priority</label><select id="priority" th:field="*{priority}" class="form-select" required><option th:each="value : ${priorities}" th:value="${value}" th:text="${value}"></option></select><p class="form-text">Both deadlines use the latest policy for this priority, measured from the original ticket creation time.</p></div>
+<p th:if="${resuming}">The recorded operational status will be restored. Escalation history and SLA deadlines remain unchanged. A newly reached escalation level may escalate the ticket again.</p>
+<label for="reason" class="form-label">Reason (required)</label><textarea id="reason" th:field="*{reason}" class="form-control mb-3" rows="3" maxlength="1000" required></textarea><div><button class="btn btn-primary" type="submit">Save</button></div></form></main>
+<footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

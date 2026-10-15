@@ -1,0 +1,4 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Request unavailable')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><h1>Request unavailable</h1><p role="alert" th:text="${message}"></p><a class="btn btn-primary" th:href="@{/dashboard}">Return to workspace</a></main>
+<footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

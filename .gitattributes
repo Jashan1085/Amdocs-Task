@@ -1,0 +1,3 @@
+* text=auto
+# The migration ledger hashes SQL bytes; keep checkout line endings stable.
+*.sql text eol=lf

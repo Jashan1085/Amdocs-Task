@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments/layout :: head('Report job')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header><main class="container main-content"><h1 th:text="${job.type}"></h1>
+<p th:text="${job.from+' to '+job.to+' (Asia/Kolkata creation dates)'}"></p><p>Status: <strong th:text="${job.status}"></strong></p>
+<p th:if="${job.status == 'FAILED'}">Report generation failed. Try a narrower date range, or ask the service desk to check database availability. Internal errors are suppressed.</p>
+<div class="d-flex gap-3 mb-4"><a th:href="@{${base+'/reports/'+job.id}}">Refresh status</a><a th:href="@{${base+'/reports'}}">All your jobs</a><a th:if="${job.status == 'COMPLETE'}" th:href="@{${base+'/reports/'+job.id+'/download'}}">Download</a></div>
+<form method="post" th:action="@{${base+'/reports/'+job.id+'/delete'}}"><button class="btn btn-outline-danger" type="submit">Delete / cancel this job</button></form>
+</main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Forgot password')}"></head>
+<body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><div class="auth-grid">
+<section class="intro-panel"><p class="eyebrow">TELECOM SERVICE ASSURANCE</p><h1>Keep services connected.</h1>
+<p class="lead">One workspace for customers, support teams and network operations.</p>
+<div class="intro-item">Report service issues</div><div class="intro-item">Follow incident progress</div><div class="intro-item">Coordinate network support</div></section>
+<section class="card auth-card"><div class="card-body p-4 p-md-5">
+<p class="eyebrow">ACCOUNT RECOVERY</p><h2>Forgot password?</h2><p class="text-secondary">Enter your username to request a reset code.</p><div class="alert alert-danger" role="alert" th:if="${message}" th:text="${message}"></div><form th:action="@{/forgot-password}" th:object="${form}" method="post"><div class="mb-3"><label for="username" class="form-label">Username</label><input id="username" name="username" th:value="${form.username}" class="form-control" autocomplete="username" maxlength="100" required></div><div class="mb-3"><label for="captcha" class="form-label">CAPTCHA: what is <span id="captcha-question" th:text="${captchaQuestion}"></span>?</label>
+<input type="hidden" name="captchaId" th:value="${captchaId}">
+<input id="captcha" name="captcha" class="form-control" inputmode="numeric" autocomplete="off" maxlength="20" required></div><button class="btn btn-primary w-100" type="submit">Request reset code</button></form><a class="d-block mt-3 text-center" th:href="@{/login}">Back to sign-in</a></div></section></div></main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

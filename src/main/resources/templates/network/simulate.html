@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Simulate network event')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><h1>Simulate a network event</h1><p>Development only. This creates real development tickets for eligible mapped services. Re-submitting this form uses the same event key.</p><p><a th:href="@{/service-desk/network/nodes}">View node IDs and mappings</a></p>
+<form th:action="@{/service-desk/network/simulate}" method="post" th:object="${form}" class="card p-4"><input type="hidden" th:field="*{eventKey}">
+<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">Choose an existing active node and event type, and enter a description of up to 1000 characters.</div>
+<label for="nodeId" class="form-label">Node ID from the node list</label><input id="nodeId" type="number" min="1" th:field="*{nodeId}" class="form-control mb-3" required>
+<label for="type" class="form-label">Event type</label><select id="type" th:field="*{type}" class="form-select mb-3"><option th:each="value : ${types}" th:value="${value}" th:text="${value}"></option></select>
+<label for="description" class="form-label">Description</label><textarea id="description" th:field="*{description}" maxlength="1000" class="form-control mb-3" required></textarea>
+<button type="submit" class="btn btn-primary">Persist and queue event</button></form>
+</main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

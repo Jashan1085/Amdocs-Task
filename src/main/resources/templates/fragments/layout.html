@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(pageTitle)">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${pageTitle + ' | TelecomOSS'}">TelecomOSS</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header th:fragment="nav" class="app-header">
+  <nav class="container d-flex align-items-center justify-content-between py-3" aria-label="Main navigation">
+    <a class="brand" th:href="@{/}"><span class="brand-mark" aria-hidden="true">T</span> TelecomOSS</a>
+    <div class="d-flex align-items-center gap-3" th:if="${signedIn}">
+      <a th:href="@{/dashboard}" class="nav-link">Workspace</a>
+      <form th:action="@{/logout}" method="post"><button class="btn btn-outline-light btn-sm" type="submit">Sign out</button></form>
+    </div>
+    <a th:unless="${signedIn}" th:href="@{/login}" class="nav-link">Sign in</a>
+  </nav>
+</header>
+<footer th:fragment="footer" class="container app-footer">Telecom Service Assurance &amp; Trouble Ticket Management</footer>
+</body></html>

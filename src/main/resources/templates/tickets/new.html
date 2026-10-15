@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Raise ticket')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><p class="eyebrow">REPORT A SERVICE ISSUE</p><h1>Raise a ticket</h1><p><strong th:text="${service.serviceCode}"></strong> · <span th:text="${service.serviceName}"></span></p><a th:href="@{${base + '/services'}}">Choose another service</a>
+<form class="card p-4 mt-4" th:action="@{${base + '/tickets'}}" th:object="${form}" method="post">
+<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}"><p>Please check the ticket details.</p><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></div>
+<input type="hidden" th:field="*{serviceId}">
+<div class="row g-3"><div class="col-md-4"><label for="category" class="form-label">Incident category</label><select id="category" th:field="*{category}" class="form-select" required><option value="">Choose category</option><option th:each="value : ${categories}" th:value="${value}" th:text="${value}"></option></select></div>
+<div class="col-md-4"><label for="priority" class="form-label">Priority</label><select id="priority" th:field="*{priority}" class="form-select" required><option value="">Choose priority</option><option th:each="value : ${priorities}" th:value="${value}" th:text="${value}"></option></select></div>
+<div class="col-md-4"><label for="severity" class="form-label">Severity</label><select id="severity" th:field="*{severity}" class="form-select" required><option value="">Choose severity</option><option th:each="value : ${severities}" th:value="${value}" th:text="${value}"></option></select></div></div>
+<div class="my-3"><label for="description" class="form-label">Describe the issue</label><textarea id="description" th:field="*{description}" class="form-control" rows="6" maxlength="4000" required></textarea><div class="form-text">Include the symptoms and when they started. Maximum 4000 characters.</div></div>
+<p class="text-secondary">Response and resolution targets are calculated from the selected priority when the ticket is created.</p><div><button class="btn btn-primary" type="submit">Create ticket</button></div></form></main>
+<footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

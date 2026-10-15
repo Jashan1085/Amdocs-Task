@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Engineer assignment')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><p class="eyebrow">SERVICE DESK</p><h1 th:text="${options.ticket.assignedEngineerId == null ? 'Assign engineer' : 'Reassign engineer'}"></h1>
+<p><strong th:text="${options.ticket.ticketNumber}"></strong> · <span th:text="${options.ticket.status}"></span></p>
+<a th:href="@{/service-desk/tickets/{id}(id=${options.ticket.ticketId})}">Back to ticket</a>
+<section class="card p-4 mt-4"><h2 class="h5">Recommended engineers</h2>
+<p>Available engineers are matched by specialization and service region. Ranked by active workload, experience and employee code.</p>
+<p>Required specialization: <strong th:text="${options.specialization == null ? 'Not configured' : options.specialization}"></strong> · Region: <strong th:text="${options.service.region}"></strong></p>
+<p th:if="${options.currentEngineer != null}">Current engineer: <strong th:text="${options.currentEngineer.employeeCode+' · '+options.currentEngineer.engineerName}"></strong></p>
+<p class="alert alert-info" role="status" th:if="${options.recommendations.empty}">No matching available engineers were found. Assignment cannot proceed until an eligible engineer is available.</p>
+<form th:unless="${options.recommendations.empty}" th:action="@{/service-desk/tickets/{id}/assignment(id=${options.ticket.ticketId})}" th:object="${form}" method="post">
+<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}"><ul class="mb-0"><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></div>
+<input type="hidden" th:field="*{rowVersion}">
+<div class="table-responsive"><table class="table"><thead><tr><th>Select</th><th>Engineer</th><th>Active tickets</th><th>Experience</th></tr></thead><tbody>
+<tr th:each="candidate : ${options.recommendations}"><td><input type="radio" th:field="*{engineerId}" th:value="${candidate.engineer.engineerId}" th:aria-label="${'Select '+candidate.engineer.employeeCode}" required></td><td><strong th:text="${candidate.engineer.employeeCode}"></strong><br><span th:text="${candidate.engineer.engineerName}"></span></td><td th:text="${candidate.activeWorkload}"></td><td th:text="${candidate.engineer.experienceYears+' years'}"></td></tr>
+</tbody></table></div><div class="mb-3"><label for="reason" class="form-label">Reason <span th:text="${options.ticket.assignedEngineerId == null ? '(optional)' : '(required for reassignment)'}"></span></label><textarea id="reason" th:field="*{reason}" class="form-control" rows="3" maxlength="1000" th:required="${options.ticket.assignedEngineerId != null}"></textarea></div>
+<button class="btn btn-primary" type="submit">Save assignment</button></form></section></main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

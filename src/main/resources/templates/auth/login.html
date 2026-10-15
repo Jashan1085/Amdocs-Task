@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Sign in')}"></head>
+<body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><div class="auth-grid">
+<section class="intro-panel"><p class="eyebrow">TELECOM SERVICE ASSURANCE</p><h1>Keep services connected.</h1>
+<p class="lead">One workspace for customers, support teams and network operations.</p>
+<div class="intro-item">Report service issues</div><div class="intro-item">Follow incident progress</div><div class="intro-item">Coordinate network support</div></section>
+<section class="card auth-card"><div class="card-body p-4 p-md-5">
+<p class="eyebrow">STEP 1 OF 2</p><h2>Sign in</h2><p class="text-secondary">Enter your username, password and the answer to the security check. Next, verify your code.</p>
+<div class="alert alert-success" role="status" th:if="${notice}" th:text="${notice}"></div>
+<div class="alert alert-info" role="status" th:if="${param.logout != null}">You have signed out.</div>
+<div class="alert alert-info" role="status" th:if="${param.expired != null}">Your session ended. Please sign in again.</div>
+<div class="alert alert-danger" role="alert" th:if="${message}" th:text="${message}"></div><form th:action="@{/login}" th:object="${form}" method="post">
+<div class="mb-3"><label for="username" class="form-label">Username</label><input id="username" name="username" th:value="${form.username}" class="form-control" autocomplete="username" maxlength="100" required></div><div class="mb-3"><label for="password" class="form-label">Password</label><input id="password" name="password" type="password" class="form-control" autocomplete="current-password" maxlength="128" required></div>
+<div class="mb-3"><label for="captcha" class="form-label">Security check (CAPTCHA): add <strong id="captcha-question" th:text="${captchaQuestion}"></strong></label>
+<input type="hidden" name="captchaId" th:value="${captchaId}">
+<input id="captcha" name="captcha" class="form-control" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="Your answer" aria-describedby="captcha-help" required>
+<div id="captcha-help" class="form-text">Type the answer to the addition shown above. Valid for five minutes.</div></div><button class="btn btn-primary w-100" type="submit">Continue to verification</button></form>
+<a class="d-block mt-3 text-center" th:href="@{/forgot-password}">Forgot password?</a></div></section></div></main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

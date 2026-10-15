@@ -1,0 +1,5 @@
+"ticket_number"	"service_code"	"region"	"status"	"description"
+"SAMPLE-001"	"SAMPLE-SVC-01"	"West"	"OPEN"	"Link down, awaiting review"
+"SAMPLE-002"	"SAMPLE-SVC-02"	"North"	"CLOSED"	"Router ""A"" restored
+Customer confirmed"
+"SAMPLE-003"	"SAMPLE-SVC-03"	"West"	"OPEN"	"'=SUM(A1:A2)"

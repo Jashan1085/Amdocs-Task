@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org"><body>
+<section th:fragment="details" class="mb-4">
+<div class="d-flex flex-wrap gap-2 mb-4"><th:block th:each="action : ${actions}"><a th:if="${action.name() != 'CLOSE' or resolution != null}" class="btn btn-outline-primary" th:href="@{${base+'/tickets/'+ticket.ticketId+'/actions'}(action=${action})}" th:text="${action.label}"></a></th:block>
+<a th:if="${customerScope and ticket.status.name() == 'CLOSED' and feedback == null}" class="btn btn-primary" th:href="@{/customer/tickets/{id}/feedback(id=${ticket.ticketId})}">Leave feedback</a></div>
+<p class="alert alert-info" th:if="${desk and ticket.status.name() == 'RESOLVED' and resolution == null}">This legacy ticket has no recorded resolution details. Closure requires reviewed resolution data.</p>
+<div class="card p-4 mb-3" th:if="${resolution != null}"><h2 class="h4">Resolution</h2><p><strong>Code: </strong><span th:text="${resolution.code}"></span></p><h3 class="h6">Root cause</h3><p class="ticket-text" th:text="${resolution.rootCause}"></p><h3 class="h6">Resolution details</h3><p class="ticket-text" th:text="${resolution.text}"></p></div>
+<div class="card p-4 mb-3" th:if="${cancellation != null}"><h2 class="h4">Cancellation</h2><p class="ticket-text" th:text="${cancellation.reason}"></p><p th:text="${@ticketTimes.format(cancellation.cancelledAt)}"></p></div>
+<div class="card p-4 mb-3" th:if="${feedback != null}"><h2 class="h4">Customer feedback</h2><p th:text="${feedback.rating+' / 5'}"></p><p class="ticket-text" th:text="${feedback.comments}"></p><p th:text="${@ticketTimes.format(feedback.submittedAt)}"></p></div>
+</section></body></html>

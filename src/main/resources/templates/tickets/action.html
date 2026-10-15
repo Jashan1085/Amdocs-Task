@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Update ticket')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><p class="eyebrow" th:text="${ticket.ticketNumber}"></p><h1 th:text="${form.action.label}"></h1><a th:href="@{${base+'/tickets/'+ticket.ticketId}}">Back to ticket</a>
+<form class="card p-4 mt-4" th:action="@{${base+'/tickets/'+ticket.ticketId+'/actions'}}" th:object="${form}" method="post">
+<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></div>
+<input type="hidden" th:field="*{rowVersion}"><input type="hidden" th:field="*{action}">
+<div th:if="${form.action.name() == 'RESOLVE'}"><div class="mb-3"><label for="rootCause" class="form-label">Root cause</label><textarea id="rootCause" th:field="*{rootCause}" class="form-control" maxlength="1000" rows="3" required></textarea></div>
+<div class="mb-3"><label for="resolutionText" class="form-label">Resolution details</label><textarea id="resolutionText" th:field="*{resolutionText}" class="form-control" maxlength="4000" rows="5" required></textarea></div>
+<div class="mb-3"><label for="resolutionCode" class="form-label">Resolution code</label><select id="resolutionCode" th:field="*{resolutionCode}" class="form-select" required><option value="">Choose a code</option><option th:each="code : ${resolutionCodes}" th:value="${code}" th:text="${code}"></option></select></div></div>
+<div class="mb-3"><label for="reason" class="form-label" th:text="${form.action.name() == 'CANCEL' or form.action.name() == 'WAIT_CUSTOMER' ? 'Reason / information requested (required)' : 'Notes (optional)'}"></label><textarea id="reason" th:field="*{reason}" class="form-control" maxlength="1000" rows="3" th:required="${form.action.name() == 'CANCEL' or form.action.name() == 'WAIT_CUSTOMER'}"></textarea></div>
+<p class="text-secondary" th:if="${form.action.name() == 'WAIT_CUSTOMER'}">The SLA clock continues while customer information is pending.</p><div><button class="btn btn-primary" type="submit" th:text="${form.action.label}"></button></div></form></main>
+<footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

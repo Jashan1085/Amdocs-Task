@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Notifications')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><h1 th:text="${deskView ? 'Notification processing' : 'Notification inbox'}"></h1>
+<p th:if="${deskView}">Delivery overview for service desk. Recipient read state is shown for review.</p>
+<p th:unless="${deskView}">Read state and delivery processing are separate. Delivery uses the local in-app inbox.</p>
+<form method="get" th:action="@{${base+'/notifications'}}" class="mb-4"><label><input type="checkbox" name="unread" value="true" th:checked="${unread}"> Unread only</label> <button class="btn btn-outline-primary" type="submit">Filter</button></form>
+<p th:if="${results.items.empty}">No notifications match this page.</p>
+<div class="table-responsive"><table class="table bg-white"><thead><tr><th>Ticket / event</th><th>Message</th><th>Delivery</th><th>Read state</th></tr></thead><tbody>
+<tr th:each="item : ${results.items}"><td><span th:text="${item.ticket_number}"></span><br><small th:text="${item.event_type}"></small></td><td th:text="${item.message}"></td>
+<td><strong th:text="${item.delivery_status}"></strong><br><small th:text="${'Attempts: '+item.attempts}"></small><p th:if="${item.last_error_code != null}">Delivery unavailable. <span th:if="${item.delivery_status == 'FAILED'}">Retry limit reached; desk review required.</span><span th:unless="${item.delivery_status == 'FAILED'}">A retry is scheduled.</span></p></td>
+<td><span th:text="${item.read_at == null ? 'Unread' : 'Read'}"></span><form th:if="${!deskView and item.read_at == null}" method="post" th:action="@{${base+'/notifications/'+item.id+'/read'}}"><button class="btn btn-sm btn-outline-primary" type="submit">Mark read</button></form></td></tr>
+</tbody></table></div>
+<nav class="d-flex gap-3" aria-label="Notification pages"><a th:if="${results.previous}" th:href="@{${base+'/notifications'}(page=${results.number-1},unread=${unread})}">Previous</a><span th:text="${'Page '+(results.number+1)}"></span><a th:if="${results.next}" th:href="@{${base+'/notifications'}(page=${results.number+1},unread=${unread})}">Next</a></nav>
+</main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

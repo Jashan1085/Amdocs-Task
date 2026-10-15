@@ -1,0 +1,7 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Network events')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><h1>Network events</h1><div class="d-flex gap-3 mb-4"><a th:href="@{/service-desk/network/nodes}">Manage nodes and mappings</a><a th:if="${demoOtp}" th:href="@{/service-desk/network/simulate}">Simulate an event</a></div>
+<p>Pending events are recovered automatically. Unmapped or failed events remain available for review.</p><p th:if="${results.items.empty}">No events yet.</p>
+<div class="table-responsive"><table class="table bg-white"><thead><tr><th>Event</th><th>Node / type</th><th>Description</th><th>Status</th><th>Attempts</th></tr></thead><tbody><tr th:each="event : ${results.items}"><td><a th:href="@{/service-desk/network/events/{id}(id=${event.id})}" th:text="${event.id}"></a></td><td th:text="${event.node_code+' / '+event.event_type}"></td><td th:text="${event.description}"></td><td th:text="${event.processing_status}"></td><td th:text="${event.attempts}"></td></tr></tbody></table></div>
+<nav class="d-flex gap-3" aria-label="Event pages"><a th:if="${results.previous}" th:href="@{/service-desk/network/events(page=${results.number-1})}">Previous</a><span th:text="${'Page '+(results.number+1)}"></span><a th:if="${results.next}" th:href="@{/service-desk/network/events(page=${results.number+1})}">Next</a></nav>
+</main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Reset password')}"></head>
+<body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><div class="auth-grid">
+<section class="intro-panel"><p class="eyebrow">TELECOM SERVICE ASSURANCE</p><h1>Keep services connected.</h1>
+<p class="lead">One workspace for customers, support teams and network operations.</p>
+<div class="intro-item">Report service issues</div><div class="intro-item">Follow incident progress</div><div class="intro-item">Coordinate network support</div></section>
+<section class="card auth-card"><div class="card-body p-4 p-md-5">
+<p class="eyebrow">ACCOUNT RECOVERY</p><h2>Set a new password</h2><p class="text-secondary">If the account is eligible, a reset code has been issued. Codes expire after five minutes.</p><div class="alert alert-danger" role="alert" th:if="${message}" th:text="${message}"></div><form th:action="@{/reset-password}" th:object="${form}" method="post"><div class="mb-3"><label for="code" class="form-label">Six-digit verification code</label><input id="code" name="code" class="form-control otp-input" autocomplete="one-time-code" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" required></div><div class="mb-3"><label for="password" class="form-label">New password</label><input id="password" name="password" type="password" class="form-control" autocomplete="new-password" minlength="12" maxlength="72" required><div class="form-text">At least 12 characters; at most 72 bytes in UTF-8.</div></div>
+<div class="mb-3"><label for="confirmation" class="form-label">Confirm password</label><input id="confirmation" name="confirmation" type="password" class="form-control" autocomplete="new-password" minlength="12" maxlength="72" required></div>
+<button class="btn btn-primary w-100" type="submit">Update password</button></form><div class="demo-note mt-3" th:if="${demoOtp}"><strong>Development reset code</strong><p class="otp-display mb-1" th:if="${devCode}" th:text="${devCode}"></p><p class="mb-0" th:unless="${devCode}">No code is available. Request a new code below.</p><p class="mb-0" th:if="${devCode}">Enter this code above. No email or SMS is sent in development.</p></div><a class="d-block mt-3 text-center" th:href="@{/forgot-password}">Request a new code</a></div></section></div></main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

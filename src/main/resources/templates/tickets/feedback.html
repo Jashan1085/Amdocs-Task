@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Ticket feedback')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><p class="eyebrow" th:text="${ticket.ticketNumber}"></p><h1>Rate your support experience</h1><a th:href="@{/customer/tickets/{id}(id=${ticket.ticketId})}">Back to ticket</a>
+<form class="card p-4 mt-4" th:action="@{/customer/tickets/{id}/feedback(id=${ticket.ticketId})}" th:object="${form}" method="post">
+<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></div>
+<input type="hidden" th:field="*{rowVersion}"><div class="mb-3"><label for="rating" class="form-label">Rating (1 = poor, 5 = excellent)</label><select id="rating" th:field="*{rating}" class="form-select" required><option value="">Choose a rating</option><option th:each="number : ${#numbers.sequence(1,5)}" th:value="${number}" th:text="${number}"></option></select></div>
+<div class="mb-3"><label for="comments" class="form-label">Comments (optional)</label><textarea id="comments" th:field="*{comments}" class="form-control" rows="4" maxlength="2000"></textarea></div><p class="text-secondary">Feedback can be submitted once after closure.</p><div><button class="btn btn-primary" type="submit">Submit feedback</button></div></form></main>
+<footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

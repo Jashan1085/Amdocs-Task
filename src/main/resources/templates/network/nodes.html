@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Network nodes')}"></head><body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><h1>Network nodes</h1><p><a th:href="@{/service-desk/network/events}">Network events</a></p>
+<section class="card p-4 mb-4"><h2 class="h4">Register a node</h2><form th:action="@{/service-desk/network/nodes}" method="post" th:object="${form}">
+<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">Complete the fields within the displayed limits. Code uses letters, numbers, underscores or hyphens.</div>
+<label class="form-label" for="code">Unique code (60 characters)</label><input class="form-control mb-3" id="code" th:field="*{code}" maxlength="60" required>
+<label class="form-label" for="name">Node name (120 characters)</label><input class="form-control mb-3" id="name" th:field="*{name}" maxlength="120" required>
+<label class="form-label" for="region">Region (80 characters)</label><input class="form-control mb-3" id="region" th:field="*{region}" maxlength="80" required>
+<button class="btn btn-primary" type="submit">Register node</button></form></section>
+<p th:if="${results.items.empty}">No nodes yet.</p><table class="table bg-white"><thead><tr><th>ID</th><th>Code</th><th>Name</th><th>Region</th><th>Active</th></tr></thead><tbody><tr th:each="node : ${results.items}"><td th:text="${node.id}"></td><td><a th:href="@{/service-desk/network/nodes/{id}(id=${node.id})}" th:text="${node.node_code}"></a></td><td th:text="${node.node_name}"></td><td th:text="${node.region}"></td><td th:text="${node.active}"></td></tr></tbody></table>
+<nav class="d-flex gap-3" aria-label="Node pages"><a th:if="${results.previous}" th:href="@{/service-desk/network/nodes(page=${results.number-1})}">Previous</a><span th:text="${'Page '+(results.number+1)}"></span><a th:if="${results.next}" th:href="@{/service-desk/network/nodes(page=${results.number+1})}">Next</a></nav>
+</main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>

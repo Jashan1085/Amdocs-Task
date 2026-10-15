@@ -1,0 +1,5 @@
+# Copy to config/application-local.properties and supply your local settings.
+# This external file is deliberately outside src/main/resources and the application JAR.
+spring.datasource.url=jdbc:postgresql://localhost:5432/telecom_oss_dev
+spring.datasource.username=telecom_app
+spring.datasource.password=replace-with-your-local-password

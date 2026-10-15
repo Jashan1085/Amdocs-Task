@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Development OTP inbox')}"></head>
+<body><header th:replace="~{fragments/layout :: nav}"></header>
+<main class="container main-content"><div class="auth-grid">
+<section class="intro-panel"><p class="eyebrow">TELECOM SERVICE ASSURANCE</p><h1>Keep services connected.</h1>
+<p class="lead">One workspace for customers, support teams and network operations.</p>
+<div class="intro-item">Report service issues</div><div class="intro-item">Follow incident progress</div><div class="intro-item">Coordinate network support</div></section>
+<section class="card auth-card"><div class="card-body p-4 p-md-5">
+<p class="eyebrow">LOCAL DEVELOPMENT ONLY</p><h2>OTP inbox</h2><p class="text-secondary">Only the pending verification in this browser session is shown.</p>
+<p class="otp-display" th:if="${code}" th:text="${code}" aria-label="Verification code"></p>
+<p class="alert alert-info" th:unless="${code}">No code is available. It may have expired or been consumed.</p>
+<a class="btn btn-primary w-100" th:href="@{${returnUrl}}">Return to verification</a></div></section></div></main><footer th:replace="~{fragments/layout :: footer}"></footer></body></html>
